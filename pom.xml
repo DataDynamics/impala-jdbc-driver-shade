@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.cloudera.impala</groupId>
+    <artifactId>impala-jdbc42</artifactId>
+    <version>2.6.33.1062</version>
+    <name>Impala JDBC Shading</name>
+
+    <build>
+        <plugins>
+            <!-- Shading Log4J for Impala JDBC Driver -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="io.github.edwgiz.log4j.maven.plugins.shade.transformer.Log4j2PluginCacheFileTransformer"/>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.edwgiz</groupId>
+                        <artifactId>log4j-maven-shade-plugin-extensions</artifactId>
+                        <version>2.17.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>com.googlecode.addjars-maven-plugin</groupId>
+                <artifactId>addjars-maven-plugin</artifactId>
+                <version>1.0.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>add-jars</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/lib</directory>
+                                    <includes>
+                                        <include>**/*.jar</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>${basedir}/lib/runtime/**/*.jar</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>${basedir}/lib/runtime</directory>
+                                    <scope>runtime</scope>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
