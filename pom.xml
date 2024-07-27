@@ -22,9 +22,15 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <transformers>
-                                <transformer implementation="io.github.edwgiz.log4j.maven.plugins.shade.transformer.Log4j2PluginCacheFileTransformer"/>
-                            </transformers>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>**/Log4j2Plugins.dat</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
@@ -69,4 +75,20 @@
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.cloudera</groupId>
+            <artifactId>impala-jdbc</artifactId>
+            <version>2.6.30.1036</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/target/impala-jdbc42-2.6.33.1062.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.3.37</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
