@@ -81,7 +81,7 @@
             <artifactId>impala-jdbc</artifactId>
             <version>2.6.30.1036</version>
             <scope>system</scope>
-            <systemPath>${basedir}/target/impala-jdbc42-2.6.33.1062.jar</systemPath>
+            <systemPath>${basedir}/lib/impala-jdbc42-2.6.34.1065.jar</systemPath>
         </dependency>
 
         <dependency>
